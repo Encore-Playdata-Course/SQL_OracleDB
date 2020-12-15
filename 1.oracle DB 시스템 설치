@@ -1,0 +1,54 @@
+1. oracle DB 시스템 설치
+    1. 교육용 버전
+    2. admin의 id는 존재
+        system
+    3. 설치시 pw만 입력
+        manager 권장
+    4. window 자체에 path를 기본적으로 자동 등록
+        - JDK 와 순서를 변경(수작업)
+        - 확인 작업
+            도스창 실행
+            명령어 > path로 입력해서 확인
+
+2. Oracle DB
+    1. 학습용 table 과 데이터 무상 제공
+        -oracle 9버전 부터는 사용자들이 수작업으로 셋팅
+    
+    2. oracle 11xe 버전
+     C:\oraclexe\app\oracle\product\11.2.0\server\rdbms\admin\scott.sql
+    oracle db에 반영
+    명령어
+        1. sql 확장자 파일의 내용을 한번에 DB에 적용
+            계정 생성 명령어/table생성 명령어/데이터 저장 명령어들 존재하는 명령어
+            하나의 sql에 작성
+            이러한 파일을 한번에 db에 실행하는 명령어
+                : 뭄법 오류 절대 금지
+            SQL 실행창>@C:\oraclexe\app\oracle\product\11.2.0\server\rdbms\admin\scott.sql
+        2. 일반 user
+        3. 일반 user 접속
+            - 이미 접속된 admin 계정에서 갈아타기
+            SQL>connect SCOTT/TIGER
+
+    3. 실습 tool
+        1. 다양한 DB접속 tool들 존재
+        2. oracle인 경우
+            db설치시에 sqlplus라는 이름의 db접속 tool 내장
+        3. sqlplus 프로그램
+            일반 도스창에서 사용가능
+            >sqlplus 아이디/비번
+        4. sqlplus 사용해서 로그인 방법
+            1. cmd>sqlplus 아이디/비번
+                - 일반 도스창에서 해당 계정 로그인
+            2. SQL>connect 다른아이디/다른비번
+                - admin 계정에서 일반 계정으로 로그인 변경
+    
+    4. SQL 학습 단계
+        1. 이미 존재하는 데이터로 검색 : select
+        2. 데이터 저장/수정/삭제 (insert/update/delete)
+        3. table의 구조 변경/삭제/생성(alter/drop/create)
+        4. table 생성 시 타입 제한, 데이터 길이 제한, 중복 불허 등등의 제약 설정(무결성 관리)
+            기본키/외래키/...
+3. 참고
+    pdf/txt/java/doc/....
+    db 소통 언어가 SQL
+    sql은 sql 확장자로 작성하기도

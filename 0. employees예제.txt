@@ -1,0 +1,113 @@
+-- 계정 lock 푸는법
+CONN SYS/ORACLE AS SYSDBA;
+GRANT CONNECT, RESOURCE TO hr;
+alter user hr identified by hr account unlock;
+
+/* 사원 번호(employee_id)가 130초과 140 미만인 
+사람의 이름(first_name)과 이메일(email)을 출력하시오.
+*/
+select first_name, email
+from employees
+where employee_id>130 and employee_id<140;
+
+/*2
+*/
+
+select phone_number, hire_date
+from employees
+where length(first_name) between 3 and 5 and first_name like '_a%' and first_name like '%e%';
+
+
+/*3
+*/
+
+select job_id, last_name
+from employees
+where phone_number like '_%124%_'
+order by job_id asc;
+
+select job_id, last_name
+from employees
+where substr(phone_number,5,3) = '124'
+order by job_id asc;
+
+/*4
+*/
+
+select salary, department_id
+from employees
+where mod(manager_id,9)=1
+order by salary desc;
+
+/*5
+*/
+
+select first_name, last_name, phone_number
+from employees
+where round(salary/10000) =1;
+
+select first_name, last_name, phone_number
+from employees
+where round(salary, -4) =10000;
+
+select round(12345, -4) from dual;
+
+----------------------
+create table table1 (
+    name varchar2(20) constraint table1_name_pk primary key,
+    company varchar2(20),
+    team varchar2(20) constraint table1_team_fk references table2(team),
+    순서 number(15)
+);
+
+
+create table table2 (
+    team varchar2(20) constraint table2_team_pk primary key,
+    company varchar2(20),
+    debut number(4)
+);
+
+insert into MusicBankInfo values('최강창민','SM','동방신기',1);
+insert into MusicBankInfo values('윤노윤호','SM','동방신기',1);
+insert into MusicBankInfo values('사나','JYP','트와이스',2);
+insert into MusicBankInfo values('모모','JYP','트와이스',2);
+insert into MusicBankInfo values('나연','JYP','트와이스',2);
+insert into MusicBankInfo values('다현','JYP','트와이스',2);
+insert into MusicBankInfo values('쯔위','JYP','트와이스',2);
+insert into MusicBankInfo values('채영','JYP','트와이스',2);
+insert into MusicBankInfo values('지효','JYP','트와이스',2);
+insert into MusicBankInfo values('정연','JYP','트와이스',2);
+insert into MusicBankInfo values('미나','JYP','트와이스',2);
+insert into MusicBankInfo values('RM','빅히트','방탄소년단',4);
+insert into MusicBankInfo values('슈가','빅히트','방탄소년단',4);
+insert into MusicBankInfo values('지민','빅히트','방탄소년단',4);
+insert into MusicBankInfo values('뷔','빅히트','방탄소년단',4);
+insert into MusicBankInfo values('제이홉','빅히트','방탄소년단',4);
+insert into MusicBankInfo values('정국','빅히트','방탄소년단',4);
+insert into MusicBankInfo values('진','빅히트','방탄소년단',4);
+insert into MusicBankInfo values('제시카',null,null,null);
+insert into MusicBankInfo values('보아','SM',null,null);
+insert into MusicBankInfo values('윤아','SM','소녀시대',5);
+insert into MusicBankInfo values('태연','SM','소녀시대',5);
+insert into MusicBankInfo values('서현','SM','소녀시대',5);
+insert into MusicBankInfo values('티파니','SM','소녀시대',5);
+insert into MusicBankInfo values('유리','SM','소녀시대',5);
+insert into MusicBankInfo values('수영','SM','소녀시대',5);
+insert into MusicBankInfo values('써니','SM','소녀시대',5);
+insert into MusicBankInfo values('효연','SM','소녀시대',5);
+
+insert into TeamInfo values('동방신기','SM',2004);
+insert into TeamInfo values('트와이스','JYP',2015);
+insert into TeamInfo values('방탄소년단','빅히트',2013);
+insert into TeamInfo values('H.O.T','SM',1996);
+insert into TeamInfo values('소녀시대','SM',2007);
+
+insert into 
+
+
+
+select rownum, name, persontype
+from (select rownum as rn, time, name, persontype
+    from people, crime
+    order by time asc;)
+
