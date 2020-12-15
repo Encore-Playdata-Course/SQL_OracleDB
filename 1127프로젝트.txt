@@ -1,0 +1,145 @@
+
+-- 테이블 드랍하기
+drop table people;
+drop table crime;
+drop table crimes;
+drop table place;
+
+
+-- 테이블 생성하기
+Create table place (
+	placeid number(5) constraints place_id_pk primary key,
+	loc varchar2(20) not null,
+	countoct number(4), 
+	countnov number(4),
+	countpolice number(4) not null
+);
+
+Create table crimes(
+	crimeid number(10) constraints crimes_crimeid_pk primary key,
+	crimeType varchar2(40)
+);
+
+Create table crime (
+	case number(5) constraints crime_case_pk primary key,
+	crimeid number(10) not null constraints crime_crimetype_fk references crimes(crimeid),
+	time date,
+	placeid number(5) not null constraints crime_loc_fk references place(placeid)
+);
+
+Create table people (
+	id number(5) constraints people_name_pk primary key,
+	case number(5) constraints people_case_fk references crime(case),
+	name varchar2(10),
+	gender char(1),
+	placeid number(5) not null constraints people_loc_fk references place(placeid),
+	age number(2),
+	crimeid number(10) not null constraints people_crimeid_fk references crimes(crimeid),
+	persontype varchar(10) not null
+);
+
+
+desc place;
+desc crimes;
+desc crime;
+desc people;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+select place.*, case 
+when ((countnov-countoct)*100/countoct) between 30 and 39 then countpolice*1.3
+when ((countnov-countoct)*100/countoct)  between 70 and 79 then countpolice*1.3 
+else countpolice
+end as 충원
+from place;
+
+
+
+insert into TeamInfo values('소녀시대','SM',2007);
+
+
+select time, name, persontype, case
+from (select rownum as rn, time, name, persontype,people.case as case
+    from people, crime
+    where people.case = crime.case
+    group by time
+    order by time asc);
+
+select time
+from crime
+group by time;
+
+select name
+from people, crime  
+where people.case = crime.case and time = '20/11/26'; 
+
+select p.name, p.persontype
+from people p, (select row_number() over ( order by time asc) as rn, case as c, time as t from crime where to_char(time, 'Month') = '11월')
+where p.case = c and rn = 3;
+
+select distinct p.case
+from crime c, people p
+where p.case = c.case(+) and time = '20/10/10' and persontype = '가해자' and name is null;
+
+select p.case, name, id, time
+from crime c, people p
+where p.case = c.case(+);
+
+
+
+select (countNov-countOct)*100/countOct as inc
+from place;
+
+update place set countNov = (select count(placeid)
+from crime
+where placeid =1 and time >= '20/11/01') where placeid =1;
+
+update place set countOct = (select count(placeid)
+from crime
+where placeid =1 and time < '20/11/01') where placeid =1;
+
+
+select count(placeid)
+from crime
+where placeid =1 and time >= '20/11/01';
+
+select countpolice*1.3 as countpolice
+from (select trunc((countNov-countOct)*100/countOct) as inc, countpolice
+    from place)
+where inc >= 30;
+
+where inc = 100
+
+update place set countpolice = (select decode(inc, inc>27, 300)
+from (select (countNov-countOct)*100/countOct as inc
+from place where placeid = 1))where placeid = 1;
+
+
+update place set countpolice = (select decode((countNov-countOct)*200/countOct, 1)/2, 14, 400)
+from  place where placeid = 1)where placeid = 1;
+
+update place set countpolice = decode(trunc((countNov-countOct)*200/countOct, 1)/2, 0, 행동1,5, 행동2,10, 행동3, 마지막행동);
